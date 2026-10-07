@@ -6,12 +6,12 @@
 [![Versão](https://img.shields.io/badge/versão-[0.1.0]-blue)]()
 [![Licença](https://img.shields.io/badge/licença-[acadêmica]-lightgrey)]()
 
-**Instituição:** [Nome da instituição]  
-**Curso:** [Nome do curso]  
-**Disciplina:** [Nome da disciplina]  
-**Turma / Semestre:** [Ex.: 2026.2]  
-**Professor(a):** [Nome completo]  
-**Status do projeto:** [Protótipo / MVP / Em desenvolvimento / Concluído]
+**Instituição:** Centro Universitário de Brasília (UniCEUB)<br>
+**Curso:** Ciência da Computação<br>
+**Disciplina:** Desenvolvimento Web<br>
+**Turma / Semestre:** 2026.2<br>
+**Professor(a):** Felippe Pires Ferreira<br>
+**Status do projeto:** Em desenvolvimento<br>
 
 ---
 
@@ -181,16 +181,13 @@ Documentação completa da API: [link para Swagger, Postman ou `docs/api.md`]
 
 ## 7. Participantes
 
-*Informe nome completo, função no grupo e, se houver, o identificador acadêmico (matrícula).*
-
 | Nome | Matrícula | Função no projeto |
 | --- | --- | --- |
-| [Nome completo] | [000000] | [Ex.: coordenação / backend / frontend / testes / documentação] |
-| [Nome completo] | [000000] | [Ex.: backend] |
-| [Nome completo] | [000000] | [Ex.: frontend] |
-| [Nome completo] | [000000] | [Ex.: testes e documentação] |
+| João Gabriel Torres | 22503395 | [Ex.: coordenação / backend / frontend / testes / documentação] |
+| João Vitor Mendes Peres | 22503802 | [Ex.: backend] |
+| Leonardo Cespedes Paes Huard | 22505698 | [Ex.: frontend] |
 
-**Professor(a) responsável:** [Nome completo]
+**Professor(a) responsável:** Felippe Pires Ferreira
 
 ---
 
@@ -209,7 +206,7 @@ Documentação completa da API: [link para Swagger, Postman ou `docs/api.md`]
 
 ```bash
 # 1. Clonar o repositório
-git clone [URL_DO_REPOSITORIO]
+git clone https://github.com/rexleo111/projeto-desenvolvimento-web.git
 cd [NOME_DA_PASTA]
 
 # 2. Instalar dependências
