@@ -45,40 +45,53 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ### Objetivos
 
-*Liste os objetivos gerais e específicos do projeto.*
-
-- **Objetivo geral:** [Ex.: desenvolver uma aplicação web para gerenciar reservas de laboratórios.]
+- **Objetivo geral:** desenvolver uma aplicação web de gestão escolar utilizando Python e Django.
 - **Objetivos específicos:**
-  - [Ex.: permitir cadastro e autenticação de usuários.]
-  - [Ex.: registrar e consultar reservas por data e laboratório.]
-  - [Ex.: gerar relatórios de ocupação.]
+  - Oferecer autenticação e autorização por perfil (Aluno, Professor e Coordenação), de modo que cada usuário acesse apenas os módulos permitidos.
+  - Permitir que a Coordenação cadastre, edite e inative usuários, organize turmas (disciplinas, professores e horários), matricule alunos e emita relatórios de rendimento escolar.
+  - Permitir que o Professor visualize suas turmas e alunos, registre frequência por aula, lance e atualize notas e registre observações pedagógicas.
+  - Permitir que o Aluno consulte o boletim atualizado, o percentual de frequência por disciplina, a grade horária e as disciplinas matriculadas.
+  - Disponibilizar uma API REST própria para consulta de dados de turmas, alunos e notas.
+  - Integrar uma API externa de consulta de CEP para preencher automaticamente o endereço no cadastro de usuários.
 
 ### Público-alvo
 
-- [Ex.: estudantes da instituição]
-- [Ex.: professores responsáveis pelos laboratórios]
-- [Ex.: equipe administrativa]
+- **Alunos:** estudantes matriculados que precisam acompanhar seu desempenho acadêmico e boletins.
+- **Professores:** corpo docente responsável pelo lançamento de avaliações, frequências e observações pedagógicas.
+- **Coordenação pedagógica/administrativa:** gestores responsáveis pela estrutura curricular, pelas turmas e pelas matrículas.
 
 ---
 
 ## 2. Funcionalidades
 
-*Liste as funções implementadas (ou previstas) no sistema. Marque o status de cada uma.*
-
-| Funcionalidade | Descrição | Status |
-| --- | --- | --- |
-| [Ex.: Autenticação] | [Ex.: login, logout e recuperação de senha] | [Implementada / Em andamento / Planejada] |
-| [Ex.: Cadastro de usuários] | [Ex.: criação e edição de perfis] | [Implementada / Em andamento / Planejada] |
-| [Ex.: Relatórios] | [Ex.: exportação em PDF] | [Implementada / Em andamento / Planejada] |
+| Funcionalidade | Casos de uso | Descrição | Status |
+| --- | --- | --- | --- |
+| Autenticação por perfil | UC01 | Login com direcionamento ao portal do perfil (Aluno, Professor ou Coordenação) e bloqueio de áreas de outros perfis | Planejada |
+| Boletim escolar | UC02 | Consulta de notas, médias e frequência por disciplina, sempre atualizadas | Planejada |
+| Consulta de frequência | UC03 | Percentual de frequência do aluno por disciplina | Planejada |
+| Grade horária e disciplinas | UC04, UC05 | Consulta da grade horária e das disciplinas em que o aluno está matriculado | Planejada |
+| Alunos da turma | UC06 | Lista de turmas e alunos sob responsabilidade do professor | Planejada |
+| Registro de frequência | UC07 | Chamada por aula, com presença ou ausência de cada aluno | Planejada |
+| Lançamento de notas | UC08 | Registro e atualização de notas parciais e finais | Planejada |
+| Observações pedagógicas | UC09 | Registro de observações do professor sobre o aluno | Planejada |
+| Cadastro de usuários | UC10, UC11, UC12 | Cadastro de alunos, professores e coordenadores | Planejada |
+| Manutenção de usuários | UC13, UC14 | Edição e inativação de usuários (sem exclusão, para preservar o histórico) | Planejada |
+| Cadastro de disciplinas | UC15 | Cadastro das disciplinas oferecidas | Planejada |
+| Organização de turmas | UC16 | Criação de turmas e alocação de disciplinas, professores e horários | Planejada |
+| Matrícula | UC17 | Matrícula de alunos ativos em turmas ativas | Planejada |
+| Relatório de rendimento | UC18 | Relatório consolidado de médias e frequência dos alunos de uma turma | Planejada |
+| API REST própria | Sem caso de uso | Endpoints autenticados para consulta de dados de turmas, alunos e notas (Django REST Framework) | Planejada |
+| Consulta de CEP (API externa) | Sem caso de uso | Preenchimento automático do endereço no cadastro de usuários a partir do CEP | Planejada |
 
 ### Requisitos não funcionais
 
-*Informe restrições de qualidade, quando existirem.*
-
-- **Desempenho:** [Ex.: respostas da API em menos de 2 segundos]
-- **Segurança:** [Ex.: senhas armazenadas com hash; HTTPS em produção]
-- **Usabilidade:** [Ex.: interface responsiva para desktop e celular]
-- **Disponibilidade:** [Ex.: uso em ambiente local / laboratório da disciplina]
+- **Plataforma:** o sistema deve ser desenvolvido em Python 3.x com o framework Django.
+- **Persistência:** banco de dados relacional SQLite.
+- **Interoperabilidade:** a API REST própria deve seguir os padrões REST, com uso correto dos verbos HTTP e dos códigos de status.
+- **Segurança:** os dados de entrada devem ser validados no servidor, as senhas devem ser armazenadas com hash e o acesso aos módulos deve ser restrito ao perfil do usuário.
+- **Configuração:** chaves, credenciais e demais configurações sensíveis devem ficar em variáveis de ambiente, fora do código versionado.
+- **Usabilidade:** a interface deve ser responsiva e funcionar em navegadores web modernos, no computador e no celular.
+- **Disponibilidade:** o sistema deve ser publicado em ambiente acessível pela internet, com acesso via HTTPS.
 
 ---
 
@@ -115,69 +128,89 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ## 5. Arquitetura
 
-*Explique como o sistema está organizado: camadas, principais componentes e o fluxo entre eles. Inclua um diagrama no PDF de arquitetura ou de classes em `docs/` e descreva-o em texto.*
+O sistema segue uma arquitetura web cliente-servidor construída com Django. A ideia é separar a interface, as regras de negócio e o armazenamento dos dados.
 
-[Ex.: a solução segue uma arquitetura em camadas (apresentação, aplicação, domínio e persistência). O frontend consome uma API REST. O backend aplica as regras de negócio e persiste os dados no banco.]
+### Componentes
 
-```text
-[Usuário] → [Interface / Frontend] → [API / Backend] → [Banco de dados]
-```
+| Componente | Função |
+| --- | --- |
+| Cliente (navegador web) | Telas por onde Alunos, Professores e Coordenação usam o sistema. |
+| Servidor de aplicação (Django) | Recebe os pedidos, verifica o perfil do usuário e aplica as regras de negócio. |
+| Banco de dados (SQLite) | Guarda os dados do sistema. |
+| Serviço externo (API ViaCEP) | Devolve o endereço a partir do CEP informado no cadastro. |
 
-**Decisões relevantes:**
+### Camadas do Django
 
-- [Ex.: uso de API REST para separar cliente e servidor.]
-- [Ex.: persistência relacional porque os dados possuem relacionamentos bem definidos.]
+- **Models:** representam as classes do domínio (Usuario, Turma, Matricula, Nota etc.) e fazem o acesso ao banco.
+- **Views:** recebem as requisições, checam as permissões e aplicam as regras de negócio.
+- **Templates:** montam as páginas HTML que o navegador exibe.
+- **Django REST Framework:** expõe parte dos dados em formato JSON pela API REST própria.
 
-### Endpoints principais (quando houver API)
+### Como funciona
+
+1. O usuário acessa uma tela pelo navegador.
+2. O Django recebe o pedido, confere se o perfil tem permissão e executa a regra de negócio.
+3. Quando precisa, o Django lê ou grava os dados no banco SQLite.
+4. O Django devolve uma página HTML (telas) ou um JSON (API REST).
+5. No cadastro de usuário, o navegador consulta a API ViaCEP com o CEP digitado e preenche o endereço automaticamente.
+
+Diagrama de implantação: [`docs/arquitetura/diagrama-implantacao.pdf`](docs/arquitetura/diagrama-implantacao.pdf)
+
+### Decisões relevantes
+
+- **Django REST Framework** para construir a API REST própria.
+- **SQLite** como banco de dados, por ser simples de configurar.
+- **Inativar em vez de excluir:** usuários e turmas são inativados, para preservar o histórico de notas e frequências.
+- **Média e frequência calculadas:** os valores são calculados a partir das notas e chamadas registradas, sem guardar o resultado no banco.
+
+### API externa
+
+- **Serviço:** ViaCEP.
+- **Finalidade:** preencher automaticamente o endereço (logradouro, bairro, cidade e estado) no cadastro de usuários, a partir do CEP. Esses dados correspondem à classe Endereco do diagrama de classes.
+- **Plano de integração:** [a definir]
+
+### Endpoints principais
+
+O contrato da API ainda está em definição. Os endpoints abaixo são o ponto de partida previsto no Documento de Visão.
 
 | Método | Rota | Descrição |
 | --- | --- | --- |
-| `POST` | `/api/[recurso]` | [Ex.: criar um registro] |
-| `GET` | `/api/[recurso]` | [Ex.: listar registros] |
-| `GET` | `/api/[recurso]/{id}` | [Ex.: obter um registro] |
-| `PUT` | `/api/[recurso]/{id}` | [Ex.: atualizar um registro] |
-| `DELETE` | `/api/[recurso]/{id}` | [Ex.: remover um registro] |
+| `GET` | `/api/v1/turmas/` | Lista as turmas e seus dados |
+| `GET` | `/api/v1/boletim/` | Consulta o boletim do aluno (notas, médias e frequência) |
 
-Documentação completa da API: [link para Swagger, Postman ou `docs/api.md`]
+Documentação completa da API: [a definir]
 
 ---
 
 ## 6. Organização dos diretórios
 
-*Mantenha a árvore alinhada à estrutura real do repositório. Ajuste pastas conforme o tipo de projeto.*
-
 ```text
 .
-├── README.md                 # Documentação principal do projeto
-├── .env.example              # Modelo de variáveis de ambiente (sem segredos)
-├── docs/                     # Modelagem e demais artefatos técnicos (PDF)
-│   ├── README.pdf            # Índice da pasta docs/
+├── README.md                                       # Documentação principal do projeto
+├── docs/                                           # Documentação de análise e modelagem
+│   ├── visao/
+│   │   └── documento_de_visao.md                   # Documento de Visão
 │   └── modelagem/
 │       ├── casos-de-uso/
-│       │   └── especificacoes-casos-de-uso.pdf
+│       │   ├── Especificacoes-casos-de-uso.docx.pdf  # Catálogo, diagrama e especificações
+│       │   └── Diagrama de caso de uso gest escolar  # Fonte editável do diagrama (draw.io)
 │       ├── classes/
-│       │   └── diagrama-de-classes.pdf
+│       │   ├── diagrama-classes.docx.pdf           # Diagrama, responsabilidades e relacionamentos
+│       │   └── diagrama_classesv2.jpg              # Imagem do diagrama de classes
 │       └── banco-de-dados/
-│           ├── diagrama-er.pdf
-│           └── modelo-logico.pdf
-├── images/                   # Figuras da documentação geral (ex.: política de IA)
-├── src/                      # Código-fonte da aplicação
-│   ├── frontend/             # Interface com o usuário (quando houver)
-│   └── backend/              # Regras de negócio, API e acesso a dados (quando houver)
-├── tests/                    # Testes automatizados
-└── scripts/                  # Scripts auxiliares de setup, build ou deploy
+│           ├── diagrama-er.pdf                     # Modelo conceitual (em elaboração)
+│           └── modelo-logico.pdf                   # Modelo lógico (em elaboração)
+└── images/
+    └── semaforo.png                                # Figura da política de uso de IA
 ```
 
-| Diretório / arquivo | Função |
+| Diretório | Função |
 | --- | --- |
-| `README.md` | Apresentação do projeto, objetivos, tecnologias e instruções de uso |
-| `.env.example` | Lista das variáveis necessárias, sem credenciais reais |
-| `docs/` | Artefatos de análise e modelagem em PDF |
-| `docs/modelagem/` | Casos de uso, classes e modelo de dados (diagramas embutidos nos PDFs) |
-| `images/` | Figuras da documentação geral do repositório (não usar para diagramas de modelagem) |
-| `src/` | Código-fonte organizado por camada ou módulo |
-| `tests/` | Casos de teste e evidências de verificação |
-| `scripts/` | Automação de ambiente e execução |
+| `docs/visao/` | Documento de Visão: contexto, objetivos, escopo, restrições e riscos |
+| `docs/modelagem/casos-de-uso/` | Especificações dos casos de uso e fonte editável do diagrama |
+| `docs/modelagem/classes/` | Diagrama de classes do domínio |
+| `docs/modelagem/banco-de-dados/` | Modelo de dados do sistema |
+| `images/` | Figuras da documentação geral do repositório |
 
 ---
 
@@ -320,12 +353,10 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 ## 13. Histórico de versões
 
-*Registre entregas relevantes (sprints, checkpoints ou versões avaliadas).*
-
 | Versão | Data | Descrição |
 | --- | --- | --- |
-| `0.1.0` | [AAAA-MM-DD] | [Ex.: primeira versão executável / MVP] |
-| `0.0.1` | [AAAA-MM-DD] | [Ex.: estrutura inicial do repositório] |
+| `0.0.2` | 08/10/2026 | Preenchimento inicial do README |
+| `0.0.1` | 07/10/2026 | Estrutura inicial do repositório |
 
 ---
 
@@ -346,23 +377,22 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 ## 15. Licença, referências e contato
 
-**Licença:** [Ex.: uso exclusivamente acadêmico / MIT / outro]
+**Licença:** uso exclusivamente acadêmico.
 
 Este material destina-se a fins educacionais. Verifique com a disciplina se o código pode ser reutilizado fora do curso.
 
 ### Documentação complementar
 
-- Índice da pasta `docs/`: [`docs/README.pdf`](docs/README.pdf)
-- Casos de uso (diagrama + especificações): [`docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf`](docs/modelagem/casos-de-uso/especificacoes-casos-de-uso.pdf)
-- Diagrama de classes: [`docs/modelagem/classes/diagrama-de-classes.pdf`](docs/modelagem/classes/diagrama-de-classes.pdf)
-- Modelo conceitual (ER): [`docs/modelagem/banco-de-dados/diagrama-er.pdf`](docs/modelagem/banco-de-dados/diagrama-er.pdf)
-- Modelo lógico: [`docs/modelagem/banco-de-dados/modelo-logico.pdf`](docs/modelagem/banco-de-dados/modelo-logico.pdf)
-- Apresentação: [`docs/apresentacao.pdf`](docs/)
+- Documento de Visão: [`docs/visao/documento_de_visao.md`](docs/visao/documento_de_visao.md)
+- Casos de uso (catálogo, diagrama e especificações): [`docs/modelagem/casos-de-uso/Especificacoes-casos-de-uso.docx.pdf`](docs/modelagem/casos-de-uso/Especificacoes-casos-de-uso.docx.pdf)
+- Diagrama de casos de uso (fonte editável, draw.io): [`docs/modelagem/casos-de-uso/Diagrama de caso de uso gest escolar`](<docs/modelagem/casos-de-uso/Diagrama de caso de uso gest escolar>)
+- Diagrama de classes: [`docs/modelagem/classes/diagrama-classes.docx.pdf`](docs/modelagem/classes/diagrama-classes.docx.pdf)
+- Imagem do diagrama de classes: [`docs/modelagem/classes/diagrama_classesv2.jpg`](docs/modelagem/classes/diagrama_classesv2.jpg)
 
 ### Referências
 
-- [Autor. Título. Ano. URL ou dados bibliográficos.]
-- [Documentação oficial da tecnologia X.]
+- Django Software Foundation. Documentação do Django. Disponível em: <https://docs.djangoproject.com/>.
+- ViaCEP. Webservice gratuito de consulta de CEP. Disponível em: <https://viacep.com.br/>.
 
 ### Contato
 
