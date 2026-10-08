@@ -37,9 +37,11 @@
 
 ## 1. Descrição do projeto
 
-*Apresente o contexto, o problema e a solução proposta. Use linguagem objetiva (dois a quatro parágrafos).*
+Instituições de ensino frequentemente enfrentam desafios na centralização e digitalização do acompanhamento acadêmico. A gestão manual ou fragmentada de diários de classe, notas, frequências e materiais didáticos gera inconsistências de dados, atraso na comunicação entre a coordenação, docentes e discentes, e sobrecarga administrativa.
 
-[Descreva o que o sistema faz, para quem ele se destina e qual problema ele resolve.]
+O Sistema de Gestão Escolar surge para unificar esses fluxos, automatizando processos operacionais e provendo interfaces dedicadas para cada perfil de usuário.
+
+A implementação de uma solução web desenvolvida em Python com o ecossistema Django oferece alta produtividade, robustez em segurança e facilidade de manutenção.
 
 ### Objetivos
 
