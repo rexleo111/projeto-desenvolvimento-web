@@ -1,9 +1,7 @@
 # [Nome do Projeto]
 
-> Substitua os trechos entre colchetes `[ ]` pelas informações reais do trabalho. Remova esta nota e as demais orientações em *itálico* antes da entrega.
-
 [![Status](https://img.shields.io/badge/status-[em_desenvolvimento]-yellow)]()
-[![Versão](https://img.shields.io/badge/versão-[0.1.0]-blue)]()
+[![Versão](https://img.shields.io/badge/versão-[0.0.5]-blue)]()
 [![Licença](https://img.shields.io/badge/licença-[acadêmica]-lightgrey)]()
 
 **Instituição:** Centro Universitário de Brasília (UniCEUB)<br>
@@ -97,8 +95,6 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ## 3. Demonstração
 
-*Inclua capturas de tela, GIF ou link para vídeo. Coloque as imagens em `images/`.*
-
 ![Tela principal](images/[screenshot-principal].png)
 
 | Tela | Descrição |
@@ -112,7 +108,7 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ## 4. Tecnologias utilizadas
 
-*Informe as tecnologias de fato usadas no projeto. Remova as linhas que não se aplicarem.*
+> **Nota:** esta seção será preenchida na Entrega 2.
 
 | Camada | Tecnologia | Versão |
 | --- | --- | --- |
@@ -154,11 +150,9 @@ O sistema segue uma arquitetura web cliente-servidor construída com Django. A i
 4. O Django devolve uma página HTML (telas) ou um JSON (API REST).
 5. No cadastro de usuário, o navegador consulta a API ViaCEP com o CEP digitado e preenche o endereço automaticamente.
 
-Diagrama de implantação: [`docs/arquitetura/diagrama-implantacao.pdf`](docs/arquitetura/diagrama-implantacao.pdf)
-
 ### Decisões relevantes
 
-- **Django REST Framework** para construir a API REST própria.
+
 - **SQLite** como banco de dados, por ser simples de configurar.
 - **Inativar em vez de excluir:** usuários e turmas são inativados, para preservar o histórico de notas e frequências.
 - **Média e frequência calculadas:** os valores são calculados a partir das notas e chamadas registradas, sem guardar o resultado no banco.
@@ -167,18 +161,28 @@ Diagrama de implantação: [`docs/arquitetura/diagrama-implantacao.pdf`](docs/ar
 
 - **Serviço:** ViaCEP.
 - **Finalidade:** preencher automaticamente o endereço (logradouro, bairro, cidade e estado) no cadastro de usuários, a partir do CEP. Esses dados correspondem à classe Endereco do diagrama de classes.
-- **Plano de integração:** [a definir]
+- **Plano de integração:** [`docs/API/Plano de Integração Externa - Proj Web.docx.pdf`](<docs/API/Plano de Integração Externa - Proj Web.docx.pdf>)
+
+Resumo do plano de integração:
+
+- **Por que o ViaCEP:** é gratuito, não exige cadastro nem chave de acesso, precisa de uma única chamada por CEP e devolve os dados em JSON.
+- **Onde é usado:** nos casos de uso Cadastrar aluno, Cadastrar professor, Cadastrar coordenador e Editar usuário. O endereço é opcional, então o cadastro pode ser concluído sem ele.
+- **Endpoint consumido:** `GET https://viacep.com.br/ws/{cep}/json/`, com o CEP de 8 números, sem ponto e sem hífen.
+- **Dados utilizados:** `cep`, `logradouro`, `bairro`, `localidade` (cidade) e `uf` (estado), guardados na classe Endereco. Os campos continuam editáveis depois de preenchidos.
+- **Limites:** o sistema só chama o ViaCEP quando o CEP tem 8 números e faz uma consulta por vez, para evitar bloqueio por uso em massa.
+- **Indisponibilidade:** se o ViaCEP falhar (CEP não encontrado, demora acima de 5 segundos, serviço fora do ar, resposta inválida ou bloqueio), o cadastro não trava. O sistema avisa a coordenação e libera o preenchimento manual do endereço.
 
 ### Endpoints principais
 
-O contrato da API ainda está em definição. Os endpoints abaixo são o ponto de partida previsto no Documento de Visão.
+A API REST própria usa a URL base `/api/`, responde em JSON e exige autenticação por token no cabeçalho `Authorization` (exceto no login). As listas são paginadas com 20 itens por página.
 
-| Método | Rota | Descrição |
-| --- | --- | --- |
-| `GET` | `/api/v1/turmas/` | Lista as turmas e seus dados |
-| `GET` | `/api/v1/boletim/` | Consulta o boletim do aluno (notas, médias e frequência) |
+| Método | Rota | Quem pode usar | Descrição |
+| --- | --- | --- | --- |
+| `POST` | `/api/auth/token/` | Qualquer pessoa | Faz login e devolve o token de acesso |
+| `GET` | `/api/turmas/` | Coordenação e Professor | Lista as turmas com suas disciplinas e professores |
+| `GET` | `/api/boletim/` | Aluno e Coordenação | Mostra o boletim do aluno, com notas, média e frequência por disciplina |
 
-Documentação completa da API: [a definir]
+Documentação completa da API: [`docs/API/Contrato Inicial da API - Proj Web.docx.pdf`](<docs/API/Contrato Inicial da API - Proj Web.docx.pdf>)
 
 ---
 
@@ -186,30 +190,37 @@ Documentação completa da API: [a definir]
 
 ```text
 .
-├── README.md                                       # Documentação principal do projeto
-├── docs/                                           # Documentação de análise e modelagem
-│   ├── visao/
-│   │   └── documento_de_visao.md                   # Documento de Visão
-│   └── modelagem/
-│       ├── casos-de-uso/
-│       │   ├── Especificacoes-casos-de-uso.docx.pdf  # Catálogo, diagrama e especificações
-│       │   └── Diagrama de caso de uso gest escolar  # Fonte editável do diagrama (draw.io)
-│       ├── classes/
-│       │   ├── diagrama-classes.docx.pdf           # Diagrama, responsabilidades e relacionamentos
-│       │   └── diagrama_classesv2.jpg              # Imagem do diagrama de classes
-│       └── banco-de-dados/
-│           ├── diagrama-er.pdf                     # Modelo conceitual (em elaboração)
-│           └── modelo-logico.pdf                   # Modelo lógico (em elaboração)
+├── README.md                                           # Documentação principal do projeto
+├── docs/                                               # Documentação do projeto
+│   ├── API/
+│   │   ├── Contrato Inicial da API - Proj Web.docx.pdf     # Contrato inicial da API REST própria
+│   │   └── Plano de Integração Externa - Proj Web.docx.pdf # Plano de integração com o ViaCEP
+│   ├── modelagem/
+│   │   ├── banco-de-dados/
+│   │   │   ├── diagrama-er.pdf                         # Modelo conceitual (em elaboração)
+│   │   │   └── modelo-logico.pdf                       # Modelo lógico (em elaboração)
+│   │   ├── casos-de-uso/
+│   │   │   ├── Diagrama de caso de uso gest escolar    # Fonte editável do diagrama (draw.io)
+│   │   │   └── Especificacoes-casos-de-uso.docx.pdf    # Catálogo, diagrama e especificações
+│   │   └── classes/
+│   │       ├── diagrama-classes.docx.pdf               # Diagrama, responsabilidades e relacionamentos
+│   │       └── diagrama_classesv2.jpg                  # Imagem do diagrama de classes
+│   ├── planejamento/
+│   │   └── Planejamento - Proj Web.docx.pdf            # Responsáveis, backlog, marcos e riscos
+│   └── visao/
+│       └── documento_de_visao.md                       # Documento de Visão
 └── images/
-    └── semaforo.png                                # Figura da política de uso de IA
+    └── semaforo.png                                    # Figura da política de uso de IA
 ```
 
 | Diretório | Função |
 | --- | --- |
-| `docs/visao/` | Documento de Visão: contexto, objetivos, escopo, restrições e riscos |
+| `docs/API/` | Contrato inicial da API REST própria e plano de integração com a API externa |
+| `docs/modelagem/banco-de-dados/` | Modelo de dados do sistema |
 | `docs/modelagem/casos-de-uso/` | Especificações dos casos de uso e fonte editável do diagrama |
 | `docs/modelagem/classes/` | Diagrama de classes do domínio |
-| `docs/modelagem/banco-de-dados/` | Modelo de dados do sistema |
+| `docs/planejamento/` | Planejamento do projeto: responsáveis, backlog, estratégia, marcos e riscos |
+| `docs/visao/` | Documento de Visão: contexto, objetivos, escopo, restrições e riscos |
 | `images/` | Figuras da documentação geral do repositório |
 
 ---
@@ -218,9 +229,9 @@ Documentação completa da API: [a definir]
 
 | Nome | Matrícula | Função no projeto |
 | --- | --- | --- |
-| João Gabriel Torres | 22503395 | [Ex.: coordenação / backend / frontend / testes / documentação] |
-| João Vitor Mendes Peres | 22503802 | [Ex.: backend] |
-| Leonardo Cespedes Paes Huard | 22505698 | [Ex.: frontend] |
+| João Gabriel Torres | 22503395 | Prototipação e frontend |
+| João Vitor Mendes Peres | 22503802 | Arquitetura e modelagem |
+| Leonardo Cespedes Paes Huard | 22505698 | Modelagem de dados e análise do negócio |
 
 **Professor(a) responsável:** Felippe Pires Ferreira
 
@@ -228,7 +239,7 @@ Documentação completa da API: [a definir]
 
 ## 8. Como executar
 
-*Preencha com os comandos reais do projeto para que outra pessoa consiga reproduzir o ambiente.*
+> **Nota:** esta seção será preenchida na Entrega 2.
 
 ### Pré-requisitos
 
@@ -267,7 +278,7 @@ cp .env.example .env
 
 ## 9. Configuração
 
-*Liste as variáveis de ambiente usadas pelo sistema. Nunca publique senhas, tokens ou chaves neste arquivo.*
+> **Nota:** esta seção será preenchida na Entrega 2.
 
 | Variável | Obrigatória | Descrição | Exemplo |
 | --- | --- | --- | --- |
@@ -281,7 +292,7 @@ Credenciais reais devem ficar apenas no arquivo `.env` (não versionado).
 
 ## 10. Testes
 
-*Descreva como executar os testes e o que eles cobrem.*
+> **Nota:** esta seção será preenchida na Entrega 2.
 
 ```bash
 [comando para executar os testes]
@@ -311,18 +322,16 @@ Este repositório segue a política de uso de IA da disciplina (semáforo pedag�
 
 ### Declaração de uso
 
-*Preencha de forma honesta. Se não houve uso de IA, declare explicitamente.*
-
-- **Houve uso de IA neste projeto?** [Sim / Não]
-- **Ferramentas utilizadas:** [Ex.: ChatGPT, GitHub Copilot, Gemini — ou “nenhuma”]
-- **Finalidade:** [Ex.: revisão de texto, geração de esboço de testes, esclarecimento de dúvidas de sintaxe]
-- **O que NÃO foi delegado à IA:** [Ex.: definição do problema, modelagem, implementação das regras de negócio, testes finais]
+- **Houve uso de IA neste projeto?** Sim
+- **Ferramentas utilizadas:** Claude, Gemini
+- **Finalidade:** Revisão de texto, formatação de documentos, geração de exemplos, tirar dúvidas de modelagem
+- **O que NÃO foi delegado à IA:** Processo de definição de arquitetura, modelagem, parte central do conteúdo dos documentos
 
 ---
 
 ## 12. Contribuição e fluxo de trabalho
 
-*Padronize o trabalho em equipe. Ajuste as regras ao combinado da disciplina.*
+> **Nota:** esta seção será preenchida na Entrega 2.
 
 ### Branches
 
@@ -367,14 +376,16 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 ### Problemas conhecidos
 
-- [Ex.: a recuperação de senha ainda não envia e-mail]
-- [Ex.: o layout quebra em telas menores que 360 px]
+- O sistema ainda não foi implementado. Até o momento, o repositório contém apenas a documentação de análise e modelagem.
 
 ### Roadmap
 
-- [ ] [Ex.: autenticação com dois fatores]
-- [ ] [Ex.: exportação de relatórios em CSV]
-- [ ] [Ex.: implantação em ambiente de homologação]
+- [ ] Documentação da Fase 1 completa no repositório.
+- [ ] Projeto Django criado, com os models e o login funcionando.
+- [ ] Cadastros de usuários, disciplinas, turmas e matrícula.
+- [ ] Portais do professor e do aluno, relatório de rendimento e API REST.
+- [ ] Sistema publicado com HTTPS e análises de segurança feitas.
+- [ ] Correções finais e apresentação da Fase 2.
 
 ---
 
@@ -391,6 +402,9 @@ Este material destina-se a fins educacionais. Verifique com a disciplina se o c�
 - Diagrama de casos de uso (fonte editável, draw.io): [`docs/modelagem/casos-de-uso/Diagrama de caso de uso gest escolar`](<docs/modelagem/casos-de-uso/Diagrama de caso de uso gest escolar>)
 - Diagrama de classes: [`docs/modelagem/classes/diagrama-classes.docx.pdf`](docs/modelagem/classes/diagrama-classes.docx.pdf)
 - Imagem do diagrama de classes: [`docs/modelagem/classes/diagrama_classesv2.jpg`](docs/modelagem/classes/diagrama_classesv2.jpg)
+- Contrato inicial da API: [`docs/API/Contrato Inicial da API - Proj Web.docx.pdf`](<docs/API/Contrato Inicial da API - Proj Web.docx.pdf>)
+- Plano de integração externa (ViaCEP): [`docs/API/Plano de Integração Externa - Proj Web.docx.pdf`](<docs/API/Plano de Integração Externa - Proj Web.docx.pdf>)
+- Planejamento do projeto: [`docs/planejamento/Planejamento - Proj Web.docx.pdf`](<docs/planejamento/Planejamento - Proj Web.docx.pdf>)
 
 ### Referências
 
