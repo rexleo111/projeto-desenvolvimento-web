@@ -1,7 +1,7 @@
 # Colégio Novo Mundo
 
 [![Status](https://img.shields.io/badge/status-[em_desenvolvimento]-yellow)]()
-[![Versão](https://img.shields.io/badge/versão-[0.0.5]-blue)]()
+[![Versão](https://img.shields.io/badge/versão-[0.0.7]-blue)]()
 [![Licença](https://img.shields.io/badge/licença-[acadêmica]-lightgrey)]()
 
 **Instituição:** Centro Universitário de Brasília (UniCEUB)<br>
@@ -62,24 +62,24 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ## 2. Funcionalidades
 
-| Funcionalidade | Casos de uso | Descrição | Status |
-| --- | --- | --- | --- |
-| Autenticação por perfil | UC01 | Login com direcionamento ao portal do perfil (Aluno, Professor ou Coordenação) e bloqueio de áreas de outros perfis | Planejada |
-| Boletim escolar | UC02 | Consulta de notas, médias e frequência por disciplina, sempre atualizadas | Planejada |
-| Consulta de frequência | UC03 | Percentual de frequência do aluno por disciplina | Planejada |
-| Grade horária e disciplinas | UC04, UC05 | Consulta da grade horária e das disciplinas em que o aluno está matriculado | Planejada |
-| Alunos da turma | UC06 | Lista de turmas e alunos sob responsabilidade do professor | Planejada |
-| Registro de frequência | UC07 | Chamada por aula, com presença ou ausência de cada aluno | Planejada |
-| Lançamento de notas | UC08 | Registro e atualização de notas parciais e finais | Planejada |
-| Observações pedagógicas | UC09 | Registro de observações do professor sobre o aluno | Planejada |
-| Cadastro de usuários | UC10, UC11, UC12 | Cadastro de alunos, professores e coordenadores | Planejada |
-| Manutenção de usuários | UC13, UC14 | Edição e inativação de usuários (sem exclusão, para preservar o histórico) | Planejada |
-| Cadastro de disciplinas | UC15 | Cadastro das disciplinas oferecidas | Planejada |
-| Organização de turmas | UC16 | Criação de turmas e alocação de disciplinas, professores e horários | Planejada |
-| Matrícula | UC17 | Matrícula de alunos ativos em turmas ativas | Planejada |
-| Relatório de rendimento | UC18 | Relatório consolidado de médias e frequência dos alunos de uma turma | Planejada |
-| API REST própria | Sem caso de uso | Endpoints autenticados para consulta de dados de turmas, alunos e notas (Django REST Framework) | Planejada |
-| Consulta de CEP (API externa) | Sem caso de uso | Preenchimento automático do endereço no cadastro de usuários a partir do CEP | Planejada |
+| Funcionalidade                | Casos de uso     | Descrição                                                                                                           | Status    |
+| ----------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------- | --------- |
+| Autenticação por perfil       | UC01             | Login com direcionamento ao portal do perfil (Aluno, Professor ou Coordenação) e bloqueio de áreas de outros perfis | Planejada |
+| Boletim escolar               | UC02             | Consulta de notas, médias e frequência por disciplina, sempre atualizadas                                           | Planejada |
+| Consulta de frequência        | UC03             | Percentual de frequência do aluno por disciplina                                                                    | Planejada |
+| Grade horária e disciplinas   | UC04, UC05       | Consulta da grade horária e das disciplinas em que o aluno está matriculado                                         | Planejada |
+| Alunos da turma               | UC06             | Lista de turmas e alunos sob responsabilidade do professor                                                          | Planejada |
+| Registro de frequência        | UC07             | Chamada por aula, com presença ou ausência de cada aluno                                                            | Planejada |
+| Lançamento de notas           | UC08             | Registro e atualização de notas parciais e finais                                                                   | Planejada |
+| Observações pedagógicas       | UC09             | Registro de observações do professor sobre o aluno                                                                  | Planejada |
+| Cadastro de usuários          | UC10, UC11, UC12 | Cadastro de alunos, professores e coordenadores                                                                     | Planejada |
+| Manutenção de usuários        | UC13, UC14       | Edição e inativação de usuários (sem exclusão, para preservar o histórico)                                          | Planejada |
+| Cadastro de disciplinas       | UC15             | Cadastro das disciplinas oferecidas                                                                                 | Planejada |
+| Organização de turmas         | UC16             | Criação de turmas e alocação de disciplinas, professores e horários                                                 | Planejada |
+| Matrícula                     | UC17             | Matrícula de alunos ativos em turmas ativas                                                                         | Planejada |
+| Relatório de rendimento       | UC18             | Relatório consolidado de médias e frequência dos alunos de uma turma                                                | Planejada |
+| API REST própria              | Sem caso de uso  | Endpoints autenticados para consulta de dados de turmas, alunos e notas (Django REST Framework)                     | Planejada |
+| Consulta de CEP (API externa) | Sem caso de uso  | Preenchimento automático do endereço no cadastro de usuários a partir do CEP                                        | Planejada |
 
 ### Requisitos não funcionais
 
@@ -95,14 +95,21 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 ## 3. Demonstração
 
-![Tela principal](images/[screenshot-principal].png)
+<div align="center">
+  <img src="images/pagina-inicial-gestor.jpg" alt="Tela principal do Gestor" width="700">
+  <br>
+  <sub><em>Essa é a página inicial da tela do perfil de gestor</em></sub>
+</div><br>
 
-| Tela | Descrição |
-| --- | --- |
-| [Login] | [Acesso ao sistema com e-mail e senha] |
-| [Painel] | [Visão geral das reservas do dia] |
+| Tela                     | Perfil    | Descrição                                                                                                  |
+| ------------------------ | --------- | ---------------------------------------------------------------------------------------------------------- |
+| **Login e Autenticação** | Geral     | Porta de entrada do sistema com direcionamento seguro e exclusivo para o painel de cada usuário.           |
+| **Painel de Relatórios** | Gestor    | Visão macro do rendimento da escola, com filtros globais de cursos, turmas e disciplinas.                  |
+| **Cadastro de Usuários** | Gestor    | Interface de matrícula e registros, contando com o preenchimento automático de endereço via API (ViaCEP).  |
+| **Diário de Classe**     | Professor | Ambiente operacional do docente para registro de notas, frequências aula a aula e observações pedagógicas. |
+| **Dashboard Acadêmico**  | Aluno     | Portal para o estudante consultar seu boletim atualizado, horários e percentual de assiduidade.            |
 
-**Vídeo / protótipo:** [URL do YouTube, Loom ou Figma]
+**Vídeo / protótipo:** [Protótipo no Figma](https://www.figma.com/design/cAJrIk7QkixGKrLY4Uz5SJ/Sistema-do-Col%C3%A9gio-Novo-Mundo---Desenv.-Web?node-id=13-1013&t=HCLjpIyPsiWtdfyE-1)
 
 ---
 
@@ -110,15 +117,15 @@ A implementação de uma solução web desenvolvida em Python com o ecossistema 
 
 > **Nota:** esta seção será preenchida na Entrega 2.
 
-| Camada | Tecnologia | Versão |
-| --- | --- | --- |
-| Linguagem | [Ex.: Python, Java, TypeScript] | [Ex.: 3.12] |
-| Frontend | [Ex.: HTML, CSS, React] | [Ex.: 18] |
-| Backend | [Ex.: Flask, Spring Boot, Node.js] | [Ex.: 3.x] |
-| Banco de dados | [Ex.: PostgreSQL, SQLite, MongoDB] | [Ex.: 16] |
-| Testes | [Ex.: pytest, JUnit, Jest] | [Ex.: 8] |
-| Infraestrutura | [Ex.: Docker, GitHub Actions] | — |
-| Outras ferramentas | [Ex.: Git, Figma, Postman] | — |
+| Camada             | Tecnologia                         | Versão      |
+| ------------------ | ---------------------------------- | ----------- |
+| Linguagem          | [Ex.: Python, Java, TypeScript]    | [Ex.: 3.12] |
+| Frontend           | [Ex.: HTML, CSS, React]            | [Ex.: 18]   |
+| Backend            | [Ex.: Flask, Spring Boot, Node.js] | [Ex.: 3.x]  |
+| Banco de dados     | [Ex.: PostgreSQL, SQLite, MongoDB] | [Ex.: 16]   |
+| Testes             | [Ex.: pytest, JUnit, Jest]         | [Ex.: 8]    |
+| Infraestrutura     | [Ex.: Docker, GitHub Actions]      | —           |
+| Outras ferramentas | [Ex.: Git, Figma, Postman]         | —           |
 
 ---
 
@@ -128,12 +135,12 @@ O sistema segue uma arquitetura web cliente-servidor construída com Django. A i
 
 ### Componentes
 
-| Componente | Função |
-| --- | --- |
-| Cliente (navegador web) | Telas por onde Alunos, Professores e Coordenação usam o sistema. |
+| Componente                     | Função                                                                         |
+| ------------------------------ | ------------------------------------------------------------------------------ |
+| Cliente (navegador web)        | Telas por onde Alunos, Professores e Coordenação usam o sistema.               |
 | Servidor de aplicação (Django) | Recebe os pedidos, verifica o perfil do usuário e aplica as regras de negócio. |
-| Banco de dados (SQLite) | Guarda os dados do sistema. |
-| Serviço externo (API ViaCEP) | Devolve o endereço a partir do CEP informado no cadastro. |
+| Banco de dados (SQLite)        | Guarda os dados do sistema.                                                    |
+| Serviço externo (API ViaCEP)   | Devolve o endereço a partir do CEP informado no cadastro.                      |
 
 ### Camadas do Django
 
@@ -151,7 +158,6 @@ O sistema segue uma arquitetura web cliente-servidor construída com Django. A i
 5. No cadastro de usuário, o navegador consulta a API ViaCEP com o CEP digitado e preenche o endereço automaticamente.
 
 ### Decisões relevantes
-
 
 - **SQLite** como banco de dados, por ser simples de configurar.
 - **Inativar em vez de excluir:** usuários e turmas são inativados, para preservar o histórico de notas e frequências.
@@ -176,11 +182,11 @@ Resumo do plano de integração:
 
 A API REST própria usa a URL base `/api/`, responde em JSON e exige autenticação por token no cabeçalho `Authorization` (exceto no login). As listas são paginadas com 20 itens por página.
 
-| Método | Rota | Quem pode usar | Descrição |
-| --- | --- | --- | --- |
-| `POST` | `/api/auth/token/` | Qualquer pessoa | Faz login e devolve o token de acesso |
-| `GET` | `/api/turmas/` | Coordenação e Professor | Lista as turmas com suas disciplinas e professores |
-| `GET` | `/api/boletim/` | Aluno e Coordenação | Mostra o boletim do aluno, com notas, média e frequência por disciplina |
+| Método | Rota               | Quem pode usar          | Descrição                                                               |
+| ------ | ------------------ | ----------------------- | ----------------------------------------------------------------------- |
+| `POST` | `/api/auth/token/` | Qualquer pessoa         | Faz login e devolve o token de acesso                                   |
+| `GET`  | `/api/turmas/`     | Coordenação e Professor | Lista as turmas com suas disciplinas e professores                      |
+| `GET`  | `/api/boletim/`    | Aluno e Coordenação     | Mostra o boletim do aluno, com notas, média e frequência por disciplina |
 
 Documentação completa da API: [`docs/API/Contrato Inicial da API - Proj Web.docx.pdf`](<docs/API/Contrato Inicial da API - Proj Web.docx.pdf>)
 
@@ -213,25 +219,25 @@ Documentação completa da API: [`docs/API/Contrato Inicial da API - Proj Web.do
     └── semaforo.png                                    # Figura da política de uso de IA
 ```
 
-| Diretório | Função |
-| --- | --- |
-| `docs/API/` | Contrato inicial da API REST própria e plano de integração com a API externa |
-| `docs/modelagem/banco-de-dados/` | Modelo de dados do sistema |
-| `docs/modelagem/casos-de-uso/` | Especificações dos casos de uso e fonte editável do diagrama |
-| `docs/modelagem/classes/` | Diagrama de classes do domínio |
-| `docs/planejamento/` | Planejamento do projeto: responsáveis, backlog, estratégia, marcos e riscos |
-| `docs/visao/` | Documento de Visão: contexto, objetivos, escopo, restrições e riscos |
-| `images/` | Figuras da documentação geral do repositório |
+| Diretório                        | Função                                                                       |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| `docs/API/`                      | Contrato inicial da API REST própria e plano de integração com a API externa |
+| `docs/modelagem/banco-de-dados/` | Modelo de dados do sistema                                                   |
+| `docs/modelagem/casos-de-uso/`   | Especificações dos casos de uso e fonte editável do diagrama                 |
+| `docs/modelagem/classes/`        | Diagrama de classes do domínio                                               |
+| `docs/planejamento/`             | Planejamento do projeto: responsáveis, backlog, estratégia, marcos e riscos  |
+| `docs/visao/`                    | Documento de Visão: contexto, objetivos, escopo, restrições e riscos         |
+| `images/`                        | Figuras da documentação geral do repositório                                 |
 
 ---
 
 ## 7. Participantes
 
-| Nome | Matrícula | Função no projeto |
-| --- | --- | --- |
-| João Gabriel Torres | 22503395 | Prototipação e frontend |
-| João Vitor Mendes Peres | 22503802 | Arquitetura e modelagem |
-| Leonardo Cespedes Paes Huard | 22505698 | Modelagem de dados e análise do negócio |
+| Nome                         | Matrícula | Função no projeto                       |
+| ---------------------------- | --------- | --------------------------------------- |
+| João Gabriel Torres          | 22503395  | Prototipação e frontend                 |
+| João Vitor Mendes Peres      | 22503802  | Arquitetura e modelagem                 |
+| Leonardo Cespedes Paes Huard | 22505698  | Modelagem de dados e análise do negócio |
 
 **Professor(a) responsável:** Felippe Pires Ferreira
 
@@ -280,11 +286,11 @@ cp .env.example .env
 
 > **Nota:** esta seção será preenchida na Entrega 2.
 
-| Variável | Obrigatória | Descrição | Exemplo |
-| --- | --- | --- | --- |
-| `PORT` | Sim | Porta da aplicação | `3000` |
-| `DATABASE_URL` | Sim | Conexão com o banco | `postgresql://user:senha@localhost:5432/app` |
-| `SECRET_KEY` | Sim | Chave de sessão / JWT | `[gerar localmente]` |
+| Variável       | Obrigatória | Descrição             | Exemplo                                      |
+| -------------- | ----------- | --------------------- | -------------------------------------------- |
+| `PORT`         | Sim         | Porta da aplicação    | `3000`                                       |
+| `DATABASE_URL` | Sim         | Conexão com o banco   | `postgresql://user:senha@localhost:5432/app` |
+| `SECRET_KEY`   | Sim         | Chave de sessão / JWT | `[gerar localmente]`                         |
 
 Credenciais reais devem ficar apenas no arquivo `.env` (não versionado).
 
@@ -298,11 +304,11 @@ Credenciais reais devem ficar apenas no arquivo `.env` (não versionado).
 [comando para executar os testes]
 ```
 
-| Tipo | Ferramenta | O que verifica |
-| --- | --- | --- |
-| Unitários | [Ex.: pytest / JUnit / Jest] | [Ex.: regras de negócio isoladas] |
-| Integração | [Ex.: ...] | [Ex.: API e banco de dados] |
-| Manuais | [Ex.: checklist em `docs/`] | [Ex.: fluxos principais da interface] |
+| Tipo       | Ferramenta                   | O que verifica                        |
+| ---------- | ---------------------------- | ------------------------------------- |
+| Unitários  | [Ex.: pytest / JUnit / Jest] | [Ex.: regras de negócio isoladas]     |
+| Integração | [Ex.: ...]                   | [Ex.: API e banco de dados]           |
+| Manuais    | [Ex.: checklist em `docs/`]  | [Ex.: fluxos principais da interface] |
 
 **Cobertura atual:** [Ex.: 70% / não medida]
 
@@ -314,11 +320,11 @@ Este repositório segue a política de uso de IA da disciplina (semáforo pedag�
 
 ![Política de uso de IA — semáforo](images/semaforo.png)
 
-| Situação | Significado |
-| --- | --- |
+| Situação                    | Significado                                                                 |
+| --------------------------- | --------------------------------------------------------------------------- |
 | **Vermelho — uso proibido** | Atividades de autonomia intelectual (ex.: provas presenciais sem consulta). |
-| **Amarelo — uso limitado** | IA pode ser ferramenta auxiliar, desde que haja declaração de uso. |
-| **Verde — uso permitido** | Uso livre ao longo da atividade acadêmica. |
+| **Amarelo — uso limitado**  | IA pode ser ferramenta auxiliar, desde que haja declaração de uso.          |
+| **Verde — uso permitido**   | Uso livre ao longo da atividade acadêmica.                                  |
 
 ### Declaração de uso
 
@@ -336,7 +342,7 @@ Este repositório segue a política de uso de IA da disciplina (semáforo pedag�
 ### Branches
 
 - `main` — versão estável para avaliação
-- `develop` — integração do grupo *(opcional)*
+- `develop` — integração do grupo _(opcional)_
 - `feat/[nome]` — nova funcionalidade
 - `fix/[nome]` — correção de defeito
 - `docs/[nome]` — alterações só de documentação
@@ -353,7 +359,7 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 1. Criar uma branch a partir de `main`.
 2. Implementar e testar localmente.
-3. Abrir um *pull request* / *merge request* para revisão do grupo.
+3. Abrir um _pull request_ / _merge request_ para revisão do grupo.
 4. Só então integrar à branch principal.
 
 **Issues e quadro de tarefas:** [link do GitHub Projects, Trello ou similar]
@@ -362,14 +368,15 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 ## 13. Histórico de versões
 
-| Versão | Data | Descrição |
-| --- | --- | --- |
-| `0.0.6` | 09/10/2026 | Adicionar Modelo Lógico earquitetura da aplicaçao |
-| `0.0.5` | 08/10/2026 | Adicionar planejamento |
-| `0.0.4` | 08/10/2026 | Adicionar contrato inicial da API |
+| Versão  | Data       | Descrição                                                |
+| ------- | ---------- | -------------------------------------------------------- |
+| `0.0.7` | 09/10/2026 | Adiciona documentação do protótipo e atualiza README     |
+| `0.0.6` | 09/10/2026 | Adicionar Modelo Lógico earquitetura da aplicaçao        |
+| `0.0.5` | 08/10/2026 | Adicionar planejamento                                   |
+| `0.0.4` | 08/10/2026 | Adicionar contrato inicial da API                        |
 | `0.0.3` | 08/10/2026 | Adicionar plano de integração externa com api do Via CEP |
-| `0.0.2` | 08/10/2026 | Preenchimento inicial do README |
-| `0.0.1` | 07/10/2026 | Estrutura inicial do repositório |
+| `0.0.2` | 08/10/2026 | Preenchimento inicial do README                          |
+| `0.0.1` | 07/10/2026 | Estrutura inicial do repositório                         |
 
 ---
 
@@ -416,4 +423,4 @@ Este material destina-se a fins educacionais. Verifique com a disciplina se o c�
 
 Dúvidas sobre o projeto: joao.mperes@sempreceub.com, joaog.torres@sempreceub.com, leonardo.huard@sempreceub.com
 
-**Agradecimentos:** 
+**Agradecimentos:**
