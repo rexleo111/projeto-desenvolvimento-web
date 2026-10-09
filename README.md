@@ -1,4 +1,4 @@
-# [Nome do Projeto]
+# Colégio Novo Mundo
 
 [![Status](https://img.shields.io/badge/status-[em_desenvolvimento]-yellow)]()
 [![Versão](https://img.shields.io/badge/versão-[0.0.5]-blue)]()
@@ -413,6 +413,6 @@ Este material destina-se a fins educacionais. Verifique com a disciplina se o c�
 
 ### Contato
 
-Dúvidas sobre o projeto: [e-mail institucional do grupo ou issue no repositório]
+Dúvidas sobre o projeto: joao.mperes@sempreceub.com, joaog.torres@sempreceub.com, leonardo.huard@sempreceub.com
 
-**Agradecimentos:** [Ex.: professor(a), monitoria, materiais da disciplina]
+**Agradecimentos:** 
