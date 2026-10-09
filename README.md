@@ -355,6 +355,7 @@ Use mensagens curtas e no imperativo, por exemplo:
 
 | Versão | Data | Descrição |
 | --- | --- | --- |
+| `0.0.5` | 08/10/2026 | Adicionar planejamento |
 | `0.0.4` | 08/10/2026 | Adicionar contrato inicial da API |
 | `0.0.3` | 08/10/2026 | Adicionar plano de integração externa com api do Via CEP |
 | `0.0.2` | 08/10/2026 | Preenchimento inicial do README |
